@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="index.js"></script>
+        <script>
+            // break cache when requesting index.js
+            const script = document.createElement("script");
+            script.src = "index.js?" + new Date().getTime();
+            document.body.appendChild(script);
+        </script>
     </head>
     <body>
         <h1>yo</h1>
