@@ -3,12 +3,13 @@
     <head>
         <script>
             // break cache when requesting index.js
-            const script = document.createElement("script");
-            script.src = "index.js?" + new Date().getTime();
-            document.body.appendChild(script);
+            const script = document.createElement('script');
+            script.src = 'index.js?' + Date.now();
+            document.head.appendChild(script);
         </script>
     </head>
     <body>
         <h1>yo</h1>
+        <ul id="links"></ul>
     </body>
 </html>

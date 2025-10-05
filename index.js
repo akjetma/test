@@ -9,18 +9,21 @@ const SHEET_ID = "1FpbB1ykFwbI-T7A3PrtsFVN5VwtEVDoidEn386m7qtM";
       const json = JSON.parse(text.substring(47).slice(0, -2));
       const rows = json.table.rows.map(r => r.c.map(c => c?.v));
       console.log(rows);
-      rows
+      return rows;
     });
 
-  const headers = data.shift();
+  const headers = data.shift(); // just ignore the headers for now
 
-  const formatted = data.map(row => {
-    const obj = {};
-    row.forEach((cell, i) => {
-      obj[headers[i]] = cell;
-    });
-    return obj;
+  // create list of links
+  const ul = document.getElementById('links');
+  data.forEach(row => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+
+    // [url, title]
+    a.href = row[0];
+    a.textContent = row[1];
+    li.appendChild(a);
+    ul.appendChild(li);
   });
-
-  console.log("formatted", formatted);
 })();
