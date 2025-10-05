@@ -9,7 +9,7 @@
 3. Push my code to your repo
     ```
     git remote remove origin
-    git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.github.io.git
+    git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.git
     git push -u origin main
     ```
 4. Go to your repository’s Settings → Pages. Under “Source”, select:
