@@ -25,13 +25,12 @@
 1. Create a copy of the spreadsheet i sent you in your own google sheets account.
 2. Click File -> Share -> Publish to Web
 3. Change 'entire document' to 'Sheet1' and hit publish
-4. Copy the spreadsheet id from the url that shows up. it's the part between "e/" and "/pubhtml" (the url should look like this: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSjdlGftXC2YXxtTM8_yCRgaJSx8T1AWh7UebbirGdrLZZRZpCd9sTv-TVkzLLZUxVz9a7QAvg6ymdo/pubhtml?gid=0&single=true", the id would be "2PACX-1vSjdlGftXC2YXxtTM8_yCRgaJSx8T1AWh7UebbirGdrLZZRZpCd9sTv-TVkzLLZUxVz9a7QAvg6ymdo")
+4. Copy the spreadsheet id from the spreadsheet url (between `d/` and `/edit`)
 5. Paste the id into the SHEET_ID constant at the top of index.js
 6. In the terminal, navigate to the project folder (`cd wherever/you/put/it`)
 7. do `git commit -a -m "update id"` then `git push origin main`
 8. the website will redeploy (takes about a minute or so) and you can now use your spreadsheet as the backend for the website. changes are usually immediate but could take a minute or so to be reflected on the website. 
-
-0 cost, 0 auth headaches, super simple code, i am literally a genius
+9. you may need to go to Extensions -> Apps Script and copy the code in `google_sheets_input_helper.js` into there if you don't see `Add Link` at the top of the spreadsheet (not sure if this is copied over when you copy a spreadsheet).
 
 # Custom Domain 
 
