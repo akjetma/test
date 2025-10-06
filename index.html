@@ -20,8 +20,22 @@
             padding: 0;
         }
 
-        li {
+        .link-item {
             margin: 5px 0;
+        }
+
+        .icon {
+            vertical-align: middle;
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .date-separator {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #555;
+            border-bottom: 1px solid #ccc;
         }
 
         a {
@@ -39,7 +53,7 @@
     <h1>yo</h1>
     <ul id="links"></ul>
     <script>
-        const SHEET_ID = "1FpbB1ykFwbI-T7A3PrtsFVN5VwtEVDoidEn386m7qtM";
+        const SHEET_ID = "1ntuu5QzTpzPCQSC4dYOmz3DyN228CLEaLzUyAtxgQZg";
 
         (async () => {
 
@@ -48,22 +62,46 @@
                 .then(text => {
 
                     const json = JSON.parse(text.substring(47).slice(0, -2));
-                    const rows = json.table.rows.map(r => r.c.map(c => c?.v));
+                    const rows = json.table.rows.map(r => r.c.map(c => c?.f || c?.v || ""));
                     console.log(rows);
                     return rows;
                 });
 
-            const headers = data.shift(); // just ignore the headers for now
-
             // create list of links
             const ul = document.getElementById('links');
-            data.forEach(row => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
 
-                // [url, title]
-                a.href = row[0];
-                a.textContent = row[1];
+            let prevDate = data[0][4];
+
+            data.forEach(row => {
+                [articleURL, linkText, faviconURL, _, date] = row;
+
+                if (date !== prevDate) {
+                    const dateLi = document.createElement('li');
+                    dateLi.className = 'date-separator';
+                    dateLi.textContent = date;
+                    ul.appendChild(dateLi);
+                    prevDate = date;
+                }
+
+                let icon;
+                if (faviconURL) {
+                    icon = document.createElement('img');
+                    icon.src = faviconURL;
+                } else {
+                    icon = document.createElement('span');
+                    icon.textContent = '🔗'; // default icon
+                }
+                icon.className = 'icon';
+                
+                const a = document.createElement('a');
+                a.href = articleURL;
+                a.textContent = linkText || "(untitled)";
+
+                
+                const li = document.createElement('li');
+                li.className = 'link-item';
+
+                li.appendChild(icon);
                 li.appendChild(a);
                 ul.appendChild(li);
             });

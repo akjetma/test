@@ -27,6 +27,21 @@ const getFaviconUrl = (url) => {
   return favicon_url;
 }
 
+const getArticleTitle = (url) => {
+  try {
+    const response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+    const html = response.getContentText();
+    const titleMatch = html.match(/<title>(.*?)<\/title>/i);
+    if (titleMatch && titleMatch[1]) {
+      return titleMatch[1];
+    } else {
+      return null;
+    }
+  } catch (e) {
+    return null;
+  }
+}
+
 function showPrompt() {
   var ui = SpreadsheetApp.getUi();
 
@@ -39,8 +54,9 @@ function showPrompt() {
   if (button == ui.Button.OK) {
     const article_url = result.getResponseText();
     const icon_url = getFaviconUrl(article_url);
-    const created_at = new Date();
-    const row = [article_url, null, icon_url, null, created_at];
+    const article_title = getArticleTitle(article_url);
+    const created_at = new Date().toLocaleDateString();
+    const row = [article_url, article_title, icon_url, null, created_at];
     SpreadsheetApp.getActiveSheet().appendRow(row);
   }
 }
